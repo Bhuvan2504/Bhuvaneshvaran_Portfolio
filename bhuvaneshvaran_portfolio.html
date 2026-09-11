@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bhuvaneshvaran — XR Developer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --base: #F8F8F6;
+      --text: #141414;
+      --muted: #6B6B6B;
+      --accent: #1A6B9A;
+      --rule: #E0E0E0;
+      --card-bg: #FFFFFF;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--base);
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: var(--base);
+      border-bottom: 1px solid var(--rule);
+      z-index: 100;
+      padding: 0 5vw;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    nav .logo {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 32px;
+    }
+
+    nav ul a {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    nav ul a:hover {
+      color: var(--text);
+    }
+
+    /* ── LAYOUT ── */
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    section {
+      padding: 80px 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    section:last-child {
+      border-bottom: none;
+    }
+
+    /* ── HERO ── */
+    #hero {
+      padding-top: 120px;
+      padding-bottom: 80px;
+    }
+
+    .hero-inner {
+      display: flex;
+      gap: 40px;
+      align-items: flex-start;
+    }
+
+    .photo-slot {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      background: var(--rule);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: var(--muted);
+      text-align: center;
+      overflow: hidden;
+      border: 2px solid var(--rule);
+    }
+
+    .photo-slot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+
+    .hero-text h1 {
+      font-size: clamp(28px, 5vw, 40px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 10px;
+    }
+
+    .hero-text .role {
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .hero-text p {
+      font-size: 15px;
+      color: var(--muted);
+      max-width: 540px;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+
+    .hero-links {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 9px 20px;
+      font-size: 13px;
+      font-weight: 500;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: #155a84;
+    }
+
+    .btn-ghost {
+      border: 1px solid var(--rule);
+      color: var(--text);
+      background: transparent;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--muted);
+    }
+
+    /* ── SECTION HEADING ── */
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 32px;
+    }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 16px 24px;
+      align-items: baseline;
+    }
+
+    .skill-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+    }
+
+    .skill-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pill {
+      font-size: 12px;
+      font-weight: 400;
+      padding: 4px 10px;
+      background: var(--card-bg);
+      border: 1px solid var(--rule);
+      border-radius: 3px;
+      color: var(--text);
+    }
+
+    /* ── EXPERIENCE ── */
+    .exp-item {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 0 32px;
+      margin-bottom: 40px;
+    }
+
+    .exp-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .exp-meta {
+      padding-top: 2px;
+    }
+
+    .exp-dates {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .exp-company {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .exp-content h3 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .exp-content ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .exp-content ul li {
+      font-size: 14px;
+      color: var(--muted);
+      padding-left: 14px;
+      position: relative;
+      margin-bottom: 5px;
+      line-height: 1.6;
+    }
+
+    .exp-content ul li::before {
+      content: "–";
+      position: absolute;
+      left: 0;
+      color: var(--rule);
+    }
+
+    /* ── PROJECTS ── */
+    .project-card {
+      border-left: 2px solid var(--accent);
+      padding: 20px 24px;
+      background: var(--card-bg);
+      margin-bottom: 20px;
+    }
+
+    .project-card:last-child {
+      margin-bottom: 0;
+    }
+
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .project-header h3 {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .project-company {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    .project-card p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 12px;
+    }
+
+    .tag {
+      font-size: 11px;
+      padding: 3px 8px;
+      background: var(--base);
+      border: 1px solid var(--rule);
+      border-radius: 2px;
+      color: var(--muted);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 48px 0;
+      text-align: center;
+    }
+
+    footer p {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    footer .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+    }
+
+    footer .footer-links a {
+      font-size: 13px;
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    footer .footer-links a:hover {
+      text-decoration: underline;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .hero-inner {
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      .skills-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .exp-item {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+
+      .exp-meta {
+        margin-bottom: 8px;
+      }
+
+      nav ul {
+        gap: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="logo" href="#hero">Bhuvaneshvaran</a>
+    <ul>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="container">
+    <section id="hero">
+      <div class="hero-inner">
+        <div class="photo-slot">
+          <!-- Replace src with your photo path -->
+          <img src="./photo.jpg" alt="Bhuvaneshvaran" />
+
+        </div>
+        <div class="hero-text">
+          <h1>Bhuvaneshvaran</h1>
+          <div class="role">XR Developer &nbsp;·&nbsp; Unity &nbsp;·&nbsp; 4.8 Years</div>
+          <p>I build immersive AR/VR/MR experiences, interactive training simulators, and spatial applications —
+            primarily with Unity and C# across Meta Quest, Android, and WebGL platforms.</p>
+          <div class="hero-links">
+            <a class="btn btn-primary" href="mailto:bhuvaneshvaran2504@gmail.com">bhuvaneshvaran2504@gmail.com</a>
+            <a class="btn btn-ghost" href="https://linkedin.com/in/bhuvanesh-varan-6a77b9228"
+              target="_blank">LinkedIn</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+      <p class="section-label">Skills</p>
+      <div class="skills-grid">
+        <span class="skill-label">Languages</span>
+        <div class="skill-pills">
+          <span class="pill">C#</span>
+          <span class="pill">C</span>
+          <span class="pill">C++</span>
+          <span class="pill">JavaScript</span>
+          <span class="pill">Python</span>
+        </div>
+
+        <span class="skill-label">Engines</span>
+        <div class="skill-pills">
+          <span class="pill">Unity</span>
+          <span class="pill">Unreal Engine</span>
+        </div>
+
+        <span class="skill-label">XR</span>
+        <div class="skill-pills">
+          <span class="pill">Meta Quest</span>
+          <span class="pill">OpenXR</span>
+          <span class="pill">ARKit</span>
+          <span class="pill">ARCore</span>
+          <span class="pill">MRTK</span>
+          <span class="pill">AR Foundation</span>
+          <span class="pill">Vuforia</span>
+          <span class="pill">WebXR</span>
+        </div>
+
+        <span class="skill-label">Unity Systems</span>
+        <div class="skill-pills">
+          <span class="pill">Addressables</span>
+          <span class="pill">uGUI</span>
+          <span class="pill">TextMeshPro</span>
+          <span class="pill">Mecanim</span>
+          <span class="pill">Physics</span>
+          <span class="pill">XR Interaction Toolkit</span>
+        </div>
+
+        <span class="skill-label">Backend</span>
+        <div class="skill-pills">
+          <span class="pill">RESTful APIs</span>
+          <span class="pill">JSON Serialization</span>
+          <span class="pill">Photon</span>
+          <span class="pill">Offline Sync</span>
+        </div>
+
+        <span class="skill-label">Optimization</span>
+        <div class="skill-pills">
+          <span class="pill">Unity Profiler</span>
+          <span class="pill">GC Profiling</span>
+          <span class="pill">Draw Call Batching</span>
+          <span class="pill">Memory Budgeting</span>
+        </div>
+
+        <span class="skill-label">Workflow</span>
+        <div class="skill-pills">
+          <span class="pill">Git</span>
+          <span class="pill">Plastic SCM</span>
+          <span class="pill">Agile</span>
+          <span class="pill">Jira</span>
+          <span class="pill">ClickUp</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience">
+      <p class="section-label">Experience</p>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-dates">Dec 2023 – Present</div>
+          <div class="exp-company">Novac Technology Solution</div>
+        </div>
+        <div class="exp-content">
+          <h3>Lead Associate</h3>
+          <ul>
+            <li>Built event-driven gameplay systems, progression features, and data-driven UI flows across multiple
+              production projects.</li>
+            <li>Integrated RESTful APIs for data management, feature configs, and backend communication.</li>
+            <li>Optimized runtime performance using GC profiling, draw call batching, and material tuning.</li>
+            <li>Developed dynamic UI flows and interactive panels using Unity's uGUI system.</li>
+            <li>Coordinated team workflows and releases using Git and Plastic SCM.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-dates">Apr 2023 – Dec 2023</div>
+          <div class="exp-company">XR Labs</div>
+        </div>
+        <div class="exp-content">
+          <h3>Unity Developer</h3>
+          <ul>
+            <li>Developed gameplay mechanics and interactive client systems for mobile and PC products.</li>
+            <li>Applied Addressables for asset streaming and memory budget enforcement.</li>
+            <li>Built session state management and resume-last-session feature.</li>
+            <li>Created a reusable API integration framework with retries, timeouts, and error reporting.</li>
+            <li>Collaborated in Git-based branching workflows and code reviews.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-dates">Jan 2022 – Apr 2023</div>
+          <div class="exp-company">Sevika Tech Pvt. Ltd.</div>
+        </div>
+        <div class="exp-content">
+          <h3>Junior Unity Developer</h3>
+          <ul>
+            <li>Contributed to gameplay implementation and feature development across mobile Unity projects.</li>
+            <li>Implemented Photon multiplayer — room management, matchmaking, and game state sync.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+      <p class="section-label">Projects</p>
+
+      <div class="project-card">
+        <div class="project-header">
+          <h3>Project Noel — Season Progression System</h3>
+          <span class="project-company">Novac Technology Solution</span>
+        </div>
+        <p>Built a full end-to-end season progression system for a 10-day live event with 100+ users. XP-based reward
+          tracks, daily challenge objectives, and tiered reward distribution synced to a web portal via RESTful APIs.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Unity</span><span class="tag">C#</span><span class="tag">REST API</span><span
+            class="tag">Progression Systems</span><span class="tag">Event-Driven</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <h3>Migoto AI — VR Training Simulator</h3>
+          <span class="project-company">Novac Technology Solution</span>
+        </div>
+        <p>AI-driven VR soft skills training simulator with adaptive scenarios, voice interaction, and real-time
+          character animations. Built runtime lip-sync mapping generated audio to animation curves; profiled and
+          eliminated frame spikes.</p>
+        <div class="project-tags">
+          <span class="tag">Unity</span><span class="tag">Meta Quest</span><span class="tag">AI</span><span
+            class="tag">Animation</span><span class="tag">VR</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <h3>Mixed Reality Experience</h3>
+          <span class="project-company">Novac Technology Solution</span>
+        </div>
+        <p>Leveraged Meta Quest 3 Camera API to capture real-world data and sync it with 3D virtual objects using
+          spatial mapping and tracking. Implemented depth-correct visuals, collider generation, and seamless MR
+          interactions.</p>
+        <div class="project-tags">
+          <span class="tag">Meta Quest 3</span><span class="tag">Mixed Reality</span><span class="tag">Spatial
+            Mapping</span><span class="tag">OpenXR</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <h3>VR Authoring Tool — No-Code Editor</h3>
+          <span class="project-company">Novac Technology Solution</span>
+        </div>
+        <p>No-code editor built from scratch enabling non-technical teams to create and publish interactive training
+          applications. Supports runtime import of .FBX and .GLTF assets, offline storage, and automatic sync via
+          RESTful APIs.</p>
+        <div class="project-tags">
+          <span class="tag">Unity</span><span class="tag">No-Code</span><span class="tag">FBX</span><span
+            class="tag">GLTF</span><span class="tag">REST API</span><span class="tag">Addressables</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <h3>Daimler VR — Industrial Training Simulator</h3>
+          <span class="project-company">Novac Technology Solution</span>
+        </div>
+        <p>VR training simulator for employee onboarding on industrial coating processes. Inspection gameplay modules
+          with real-time feedback; GC profiling and batching used to stabilize frame pacing across sessions.</p>
+        <div class="project-tags">
+          <span class="tag">Unity</span><span class="tag">VR</span><span class="tag">Industrial</span><span
+            class="tag">Performance Optimization</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <h3>Toyota AR/VR</h3>
+          <span class="project-company">XR Labs</span>
+        </div>
+        <p>Driving gameplay mechanics with physics and input loop optimization. Applied Addressables for asset streaming
+          and memory budget enforcement, improving load times and reducing resident memory.</p>
+        <div class="project-tags">
+          <span class="tag">Unity</span><span class="tag">AR/VR</span><span class="tag">Addressables</span><span
+            class="tag">Physics</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <h3>Intel Digital Twin — WebGL Showcase</h3>
+          <span class="project-company">XR Labs</span>
+        </div>
+        <p>Interactive WebGL digital twin streaming text, audio, and video from REST APIs with adaptive buffering and
+          client-side caching. Optimized Addressables for reliable cross-browser content delivery.</p>
+        <div class="project-tags">
+          <span class="tag">Unity</span><span class="tag">WebGL</span><span class="tag">Digital Twin</span><span
+            class="tag">REST API</span><span class="tag">Addressables</span>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="container">
+        <p>Chennai, India &nbsp;·&nbsp; Open to relocating anywhere in India</p>
+        <div class="footer-links">
+          <a href="mailto:bhuvaneshvaran2504@gmail.com">bhuvaneshvaran2504@gmail.com</a>
+          <a href="https://linkedin.com/in/bhuvanesh-varan-6a77b9228" target="_blank">LinkedIn</a>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+</body>
+
+</html>
